@@ -9,7 +9,7 @@ public class Comment {
 	/** コンテンツ */
 	private String content;
 	/** ID */
-	private Integer article_id;
+	private Integer articleId;
 	public Integer getId() {
 		return id;
 	}
@@ -28,16 +28,17 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public Integer getArticle_id() {
-		return article_id;
+	public Integer getArticleId() {
+		return articleId;
 	}
-	public void setArticle_id(Integer article_id) {
-		this.article_id = article_id;
+	public void setArticleId(Integer articleId) {
+		this.articleId = articleId;
 	}
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", name=" + name + ", content=" + content + ", article_id=" + article_id + "]";
+		return "Comment [id=" + id + ", name=" + name + ", content=" + content + ", articleId=" + articleId + "]";
 	}
+	
 	
 	
 }

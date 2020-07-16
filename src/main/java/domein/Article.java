@@ -1,5 +1,7 @@
 package domein;
 
+import java.util.List;
+
 public class Article {
 
 	
@@ -10,6 +12,8 @@ public class Article {
 	private String name;
 	/** コンテンツ */
 	private String contents;
+	
+	private List<Comment> commentList;
 
 	public Integer getId() {
 		return id;
@@ -35,11 +39,19 @@ public class Article {
 		this.contents = contents;
 	}
 
+	public List<Comment> getCommentList() {
+		return commentList;
+	}
+
+	public void setCommentList(List<Comment> commentList) {
+		this.commentList = commentList;
+	}
+
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", name=" + name + ", contents=" + contents + "]";
-	}
-	
+		return "Article [id=" + id + ", name=" + name + ", contents=" + contents + ", commentList=" + commentList + "]";
+	} 
+
 	
 	
 }
