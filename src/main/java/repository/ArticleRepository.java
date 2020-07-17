@@ -23,7 +23,7 @@ public class ArticleRepository {
 		Article article = new Article();
 		article.setId(rs.getInt("id"));
 		article.setName(rs.getString("name"));
-		article.setContents(rs.getString("contents"));
+		article.setContent(rs.getString("content"));
 		return article;
 	};
 	
@@ -33,7 +33,7 @@ public class ArticleRepository {
 	 * @return　記事一覧
 	 */
 	public List<Article> findAll(){
-		String sql = "select id, name, contents from articles ORDER BY id DESC ";
+		String sql = "select id, name, content from articles ORDER BY id DESC ";
 		List<Article> articleList = template.query(sql, ARTICLE_ROW_MAPPER);
 		return articleList;	
 	}
@@ -44,7 +44,7 @@ public class ArticleRepository {
 	 * @param article
 	 */
 	public void insert(Article article) {
-		String sql = "insert into articles (id, name, contents) values (:id, :name, :contents )";
+		String sql = "insert into articles (id, name, content) values (:id, :name, :content )";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(article);
 		template.update(sql, param);
 		

@@ -11,7 +11,7 @@ public class Article {
 	/** 名前 */
 	private String name;
 	/** コンテンツ */
-	private String contents;
+	private String content;
 	
 	private List<Comment> commentList;
 
@@ -31,12 +31,12 @@ public class Article {
 		this.name = name;
 	}
 
-	public String getContents() {
-		return contents;
+	public String getContent() {
+		return content;
 	}
 
-	public void setContents(String contents) {
-		this.contents = contents;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public List<Comment> getCommentList() {
@@ -49,9 +49,10 @@ public class Article {
 
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", name=" + name + ", contents=" + contents + ", commentList=" + commentList + "]";
-	} 
+		return "Article [id=" + id + ", name=" + name + ", content=" + content + ", commentList=" + commentList + "]";
+	}
 
+	
 	
 	
 }

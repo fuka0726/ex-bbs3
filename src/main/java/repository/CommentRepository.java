@@ -34,7 +34,7 @@ public class CommentRepository {
 	 * @return
 	 */
 	public List<Comment> findByArticleId(Integer articleId){
-		String sql = "select id, name, contents, article_id from comments where article_id = :articleId ";
+		String sql = "select id, name, content, article_id from comments where article_id = :articleId ";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);
 		List<Comment> commentList =  template.query(sql,param,COMMENT_ROW_MAPPER );
 		return commentList;
@@ -45,7 +45,7 @@ public class CommentRepository {
 	 * @param comment
 	 */
 	public void insert (Comment comment) {
-		String sql = "insert into comments (id, name, contents, article_id) values (:id, :name, :contents, :article_id) ";
+		String sql = "insert into comments (id, name, content, article_id) values (:id, :name, :content, :article_id) ";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(comment);
 		template.update(sql, param);
 	}
