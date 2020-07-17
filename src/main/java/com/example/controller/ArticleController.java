@@ -3,6 +3,7 @@ package com.example.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,7 @@ import com.example.repository.ArticleRepository;
 import com.example.repository.CommentRepository;
 
 @Controller
-@RequestMapping("/article")
+@RequestMapping("")
 public class ArticleController {
 
 	
@@ -42,10 +43,18 @@ public class ArticleController {
 	 * 画面表示
 	 * @return
 	 */
-	@RequestMapping("/")
-	public String index() {
-//		articleRepository.findAll();
-//		commentRepository.findByArticleId(articleId);
+	@RequestMapping("/article")
+	public String index(Model model) {
+		//記事一覧を取得する
+		List<Article> articleList = articleRepository.findAll();
+		//記事一覧のひとつずつの記事から記事idでコメント一覧を取得
+		for (Article article : articleList) {
+			Integer articleId = article.getId();
+			List<Comment> commentList = commentRepository.findByArticleId(articleId);
+			article.setCommentList(commentList);
+		}
+		//コメントの詰まった記事をスコープへセット
+		model.addAttribute("articleList", articleList);
 		return "article";
 	}
 	
@@ -57,10 +66,10 @@ public class ArticleController {
 	@RequestMapping("/articleInsert")
 	public String insertArticle(ArticleForm form, Model model) {
 		Article article = new Article();
-		article.setName(form.getName());
-		article.setContent(form.getContent());
+		BeanUtils.copyProperties(form, article);
+//		article.setName(form.getName());
+//		article.setContent(form.getContent());
 		articleRepository.insert(article);
-		model.addAttribute("article", article);
 		return "redirect:/article";
 	}
 	
@@ -72,12 +81,18 @@ public class ArticleController {
 	 */
 	@RequestMapping("/commentInsert")
 	public String insertComment(CommentForm form, Model model) {
-		Comment comment = new Comment();
-		comment.setName(form.getName());
-		comment.setContent(form.getContent());
-		comment.setArticleId(Integer.parseInt(form.getArticleId()));
-		commentRepository.insert(comment);
-		model.addAttribute("comment", comment);
+		try {
+			Comment comment = new Comment();
+			BeanUtils.copyProperties(form, comment);
+//			comment.setName(form.getName());
+//			comment.setContent(form.getContent());
+			comment.setArticleId(Integer.parseInt(form.getArticleId()));
+			commentRepository.insert(comment);
+		}
+		catch (NumberFormatException e) {
+			System.out.println(form.getArticleId() + " は数値ではありません。 ");
+		}
+		
 		return "redirect:/article";
 	}
 	
@@ -87,12 +102,14 @@ public class ArticleController {
 	 * @param articleId
 	 * @return
 	 */
-	public String deleteArticle(Integer id, Integer articleId) {
-		Article article = new Article();
-		articleRepository.deleteById(id);
-		List<Comment> commentList = new ArrayList<>();
-		commentRepository.findByArticleId(articleId);
+	@RequestMapping("/delete")
+	public String deleteArticle(String articleId) {
+		int articleIdInt = Integer.parseInt(articleId);
+		commentRepository.deleteByArticleId(articleIdInt);
+		articleRepository.deleteById(articleIdInt);
+		
 		return "redirect:/article";
+		
 	}
 	
 	

@@ -1,7 +1,8 @@
 package com.example.form;
 
 public class CommentForm {
-
+	
+	
 	private String name;
 	
 	private String content;
@@ -36,6 +37,7 @@ public class CommentForm {
 	public String toString() {
 		return "CommentForm [name=" + name + ", content=" + content + ", articleId=" + articleId + "]";
 	}
+
 	
 	
 }

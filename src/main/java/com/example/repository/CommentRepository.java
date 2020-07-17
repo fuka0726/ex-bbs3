@@ -16,13 +16,13 @@ import com.example.domein.Comment;
 public class CommentRepository {
 
 	@Autowired
-	NamedParameterJdbcTemplate template;
+	private NamedParameterJdbcTemplate template;
 	
 	private static final RowMapper<Comment> COMMENT_ROW_MAPPER = (rs, i) -> {
 		Comment comment = new Comment();
 		comment.setId(rs.getInt("id"));
 		comment.setName(rs.getString("name"));
-		comment.setContent(rs.getString("contents"));
+		comment.setContent(rs.getString("content"));
 		comment.setArticleId(rs.getInt("article_id"));
 		return comment;
 	};
@@ -34,7 +34,7 @@ public class CommentRepository {
 	 * @return
 	 */
 	public List<Comment> findByArticleId(Integer articleId){
-		String sql = "select id, name, content, article_id from comments where article_id = :articleId ";
+		String sql = "select id, name, content, article_id from comments where article_id = :articleId order by id DESC ";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("articleId", articleId);
 		List<Comment> commentList =  template.query(sql,param,COMMENT_ROW_MAPPER );
 		return commentList;
@@ -45,7 +45,7 @@ public class CommentRepository {
 	 * @param comment
 	 */
 	public void insert (Comment comment) {
-		String sql = "insert into comments (id, name, content, article_id) values (:id, :name, :content, :article_id) ";
+		String sql = "insert into comments (name, content, article_id) values (:name, :content, :articleId) ";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(comment);
 		template.update(sql, param);
 	}

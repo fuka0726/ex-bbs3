@@ -44,8 +44,8 @@ public class ArticleRepository {
 	 * @param article
 	 */
 	public void insert(Article article) {
-		String sql = "insert into articles (id, name, content) values (:id, :name, :content )";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(article);
+		String sql = "insert into articles (name, content) values (:name, :content )";
 		template.update(sql, param);
 		
 	}
