@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>掲示板</h1>
+
+<form th:action="@{/article/articleInsert}" method="post">
+<textarea cols="40" rows="5" name="article"></textarea>
+
+
+
+</form>
+
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-package form;
+package com.example.form;
 
 public class CommentForm {
 

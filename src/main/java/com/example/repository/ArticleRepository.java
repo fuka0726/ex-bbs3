@@ -1,4 +1,4 @@
-package repository;
+package com.example.repository;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 
-import domein.Article;
+import com.example.domein.Article;
 
 @Repository
 public class ArticleRepository {
