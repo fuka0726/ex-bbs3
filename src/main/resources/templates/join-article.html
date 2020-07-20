@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>掲示板アプリケーション(テーブル結合版)</h1>
+
+<form th:action="@{/join/join-article-insert}" method="post">
+<strong>投稿者名：</strong><input type="text" name="name"><br>
+<strong>投稿内容：</strong><br>
+<textarea cols="40" rows="5" name="content"></textarea><br>
+<button>記事投稿</button>
+</form>
+
+
+<div th:each="article:${articleList}">
+<hr>
+投稿ID:<span th:text="${article.id}"></span><br>
+投稿者名:<span th:text="${article.name}"></span><br>
+投稿内容:<div th:text="${article.content}"></div>
+
+<form th:action="@{/join-delete}" method="post">
+<input type="hidden" name="articleId" th:value="${article.id}">
+<button>記事削除</button><br>
+</form>
+
+<div th:each="comment:${article.commentList}"><br>
+コメントID:<span th:text="${comment.id}"></span><br>
+コメント者名:<span th:text="${comment.name}"></span><br>
+コメント内容:<div th:text="${comment.content}"></div><br>
+</div>
+
+<form th:action="@{/join-comment-insert}" method="post">
+<input type="hidden" name="articleId"  th:value="${article.id}">
+<strong>名前：</strong><input type="text" name="name"><br>
+<strong>コメント：</strong><br>
+<textarea cols="40" rows="5" name="content"></textarea><br>
+<button>コメント投稿</button>
+</form>
+
+
+</div>
+
+</body>
+</html>
