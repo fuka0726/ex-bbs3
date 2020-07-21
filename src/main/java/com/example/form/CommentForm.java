@@ -1,10 +1,18 @@
 package com.example.form;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class CommentForm {
 	
-	
+	/**　コメント者名　*/
+	@NotBlank(message = "コメント者名は必須入力です" )
+	@Size(min = 1,max=127,message = "コメント者名は1桁以上127桁以下で入力してください")
 	private String name;
 	
+	/** コメント内容　*/
+	@NotBlank(message = "コメントは必須入力です")
+	@Size(min =1, message = "コメントは必須です" )
 	private String content;
 	
 	private String articleId;

@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -55,7 +57,10 @@ public class JoinedArticleController {
 	 * @return
 	 */
 	@RequestMapping("/join-article-insert")
-	public String insertArticle(ArticleForm form, Model model) {
+	public String insertArticle(@Validated ArticleForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			return index(model);
+		}
 		Article article = new Article();
 		BeanUtils.copyProperties(form, article);
 		articleRepository.insert(article);
@@ -69,7 +74,10 @@ public class JoinedArticleController {
 	 * @return
 	 */
 	@RequestMapping("/join-comment-insert")
-	public String insertComment(CommentForm form, Model model) {
+	public String insertComment(@Validated CommentForm form, BindingResult result,  Model model) {
+		if(result.hasErrors()) {
+			return index(model);
+		}
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(form, comment);
 		comment.setArticleId(Integer.parseInt(form.getArticleId()));

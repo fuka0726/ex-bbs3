@@ -7,10 +7,12 @@
 <body>
 <h1>掲示板アプリケーション(テーブル結合版)</h1>
 
-<form th:action="@{/join/join-article-insert}" method="post">
-<strong>投稿者名：</strong><input type="text" name="name"><br>
+<form th:action="@{/join-article-insert}" method="post" th:object="${articleForm}">
+<div th:errors = "*{name}" style="color:red"></div>
+<strong>投稿者名：</strong><input type="text" name="name" th:field="*{name}"><br>
+<div th:errors="*{content}" style="color:red"></div>
 <strong>投稿内容：</strong><br>
-<textarea cols="40" rows="5" name="content"></textarea><br>
+<textarea cols="40" rows="5" name="content" th:field="*{content}"></textarea><br>
 <button>記事投稿</button>
 </form>
 
@@ -21,7 +23,7 @@
 投稿者名:<span th:text="${article.name}"></span><br>
 投稿内容:<div th:text="${article.content}"></div>
 
-<form th:action="@{/join-delete}" method="post">
+<form th:action="@{/join-delete}" method="post" th:object="${articleForm}">
 <input type="hidden" name="articleId" th:value="${article.id}">
 <button>記事削除</button><br>
 <button type="button" th:value="${article.id}"><img width="10" height="10" th:src="@{/img/like.png}"></button>
@@ -34,15 +36,24 @@
 コメント内容:<div th:text="${comment.content}"></div><br>
 </div>
 
-<form th:action="@{/join-comment-insert}" method="post">
+<form th:action="@{/join-comment-insert}" method="post" th:object="${commentForm}">
 <input type="hidden" name="articleId"  th:value="${article.id}">
-<strong>名前：</strong><input type="text" name="name"><br>
+<!-- <div th:if= "${article.id == commentForm.articleId}"> -->
+	<div th:errors="*{name}" style="color:red"></div>
+<!-- </div> -->
+<strong>名前：</strong>
+<input type="text" name="name" th:if="${article.id == commentForm.articleId}" th:field="*{name}" style="color:red"><br>
+<input type="text" name="name" th:if="${article.id != commentForm.articleId}"><br>
+<!-- <div th:if="${article.id == commentForm.articleId}"> -->
+	<div th:errors="*{content}" style="color:red"></div>
+<!-- </div> -->
 <strong>コメント：</strong><br>
-<textarea cols="40" rows="5" name="content"></textarea><br>
+<textarea cols="40" rows="5" name="content" th:if="${article.id == commentForm.articleId}" th:field="*{content}" style="color:red"></textarea><br>
+<textarea cols="40" rows="5" name="content" th:if="${article.id != commentForm.articleId}"></textarea><br>
 <button>コメント投稿</button>
 </form>
-
 </div>
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script th:src="@{/js/like.js}"></script>
 </body>
