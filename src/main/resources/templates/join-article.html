@@ -24,6 +24,8 @@
 <form th:action="@{/join-delete}" method="post">
 <input type="hidden" name="articleId" th:value="${article.id}">
 <button>記事削除</button><br>
+<button type="button" th:value="${article.id}"><img width="10" height="10" th:src="@{/img/like.png}"></button>
+<span th:id="'likeCount' + ${article.id}">0</span>
 </form>
 
 <div th:each="comment:${article.commentList}"><br>
@@ -40,8 +42,8 @@
 <button>コメント投稿</button>
 </form>
 
-
 </div>
-
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script th:src="@{/js/like.js}"></script>
 </body>
 </html>
